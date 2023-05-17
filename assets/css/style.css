@@ -50,12 +50,8 @@ html {
 }
 
 .navbar-a {
-	padding: 2px;
-}
+	padding: 10px;
 
-.navbar-a:hover {
-	background-color: #BEB45A;
-	border-radius: 0.25rem;
 }
 
 .social-link img {
@@ -186,14 +182,14 @@ html {
 }
 
 .quote__text {
-	font-family: Spectral;
+	font-family: 'Spectral';
 	font-style: italic;
 	font-weight: 300;
 	font-size: calc(1.375rem + 1.5vw);
 }
 
 .quote__author {
-	font-family: Spectral;
+	font-family: 'Spectral';
 	font-weight: 800;
 	font-size: 22px;
 }
