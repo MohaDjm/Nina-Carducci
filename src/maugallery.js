@@ -74,7 +74,9 @@
     wrapItemInColumn(element, columns) {
       if (columns.constructor === Number) {
         element.wrap(
-          `<div class='item-column mb-4 col-${Math.ceil(12 / columns)}'></div>`
+          `<div tabindex="0" class='item-column mb-4 col-${Math.ceil(
+            12 / columns
+          )}'></div>`
         );
       } else if (columns.constructor === Object) {
         var columnClasses = "";
@@ -93,7 +95,7 @@
         if (columns.xl) {
           columnClasses += ` col-xl-${Math.ceil(12 / columns.xl)}`;
         }
-        element.wrap(`<div class='item-column mb-4${columnClasses}'></div>`);
+        element.wrap(`<div tabindex="0" class='item-column mb-4${columnClasses}'></div>`);
       } else {
         console.error(
           `Columns should be defined as numbers or objects. ${typeof columns} is not supported.`
@@ -137,18 +139,18 @@
         });
       }
       let index = 0,
-        preview = null;
+        next = null;
 
       $(imagesCollection).each(function (i) {
         if ($(activeImage).attr("src") === $(this).attr("src")) {
           index = i;
         }
       });
-      //code corigé [index]  => [index -1] +remplacement nom de la variable next par preview pour + de lisibilité
-      preview =
-        imagesCollection[--index] ||
+      next =
+        // fixed bug: index => index -1 to go back to previous item in the array
+        imagesCollection[index - 1] ||
         imagesCollection[imagesCollection.length - 1];
-      $(".lightboxImage").attr("src", $(preview).attr("src"));
+      $(".lightboxImage").attr("src", $(next).attr("src"));
     },
     nextImage() {
       let activeImage = null;
@@ -180,8 +182,8 @@
           index = i;
         }
       });
-      //code corigé [index]  => [index +1]
-      next = imagesCollection[++index] || imagesCollection[0];
+      // fixed bug => index +1 to go to next item in the array
+      next = imagesCollection[index + 1] || imagesCollection[0];
       $(".lightboxImage").attr("src", $(next).attr("src"));
     },
     createLightBox(gallery, lightboxId, navigation) {
@@ -209,10 +211,10 @@
     },
     showItemTags(gallery, position, tags) {
       var tagItems =
-        '<li class="nav-item"><span class="nav-link active active-tag"  data-images-toggle="all">Tous</span></li>';
+        '<li class="nav-item" tabindex="0"><span class="nav-link active active-tag"  data-images-toggle="all">Tous</span></li>';
       $.each(tags, function (index, value) {
         tagItems += `<li class="nav-item active">
-                <span class="nav-link"  data-images-toggle="${value}">${value}</span></li>`;
+                <span class="nav-link" tabindex="0" data-images-toggle="${value}">${value}</span></li>`;
       });
       var tagsRow = `<ul class="my-4 tags-bar nav nav-pills">${tagItems}</ul>`;
 
@@ -229,8 +231,7 @@
         return;
       }
       $(".active-tag").removeClass("active active-tag");
-      //manquer la classe active-tag à .addClass
-      $(this).addClass("active active-tag");
+      $(this).addClass("active-tag");
 
       var tag = $(this).data("images-toggle");
 
