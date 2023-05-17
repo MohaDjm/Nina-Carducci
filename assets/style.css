@@ -112,7 +112,7 @@ header {
 } 
 
 span.active{
-	cursor: all-scroll;
+	cursor: pointer;
 	background-color: #BEB45A;
 }
 
